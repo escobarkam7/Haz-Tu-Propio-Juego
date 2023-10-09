@@ -80,6 +80,10 @@ class Form {
 
         this.reset.mousePressed(()=> {
             player.updateCount(0);
+
+            //usamos remove cuando hay que vaciar carpeta con diferentes datos
+            var playerInfoRef = database.ref(playerIndex)
+            playerInfoRef.remove();
         });
             
             

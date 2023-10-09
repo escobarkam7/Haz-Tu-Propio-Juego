@@ -23,6 +23,7 @@ class player{
         //se crea carpeta de guardado en la base de datos para guardar la info
         var playerCountRef = database.ref("playerCount");
             //.on es para entrar dentro de la carpeta
+            //value significa OBTENER, al data le podemos cambiar el nombre pero a value
             playerCountRef.on("value", (data)=>{
                 //obtenemos los datos de la carpeta y 
                 playerCount = data.val();
@@ -32,7 +33,37 @@ class player{
 
     update(){
         var playerIndex = "player/players" + this.index;
-        //Tarea: crear carpeta playerIndex para mandar nombre, distancia y puntuación 
+      
+        database.ref(playerIndex).set({
+            name: this.name,
+            distance: this.distance,
+            score: this.score,
+        })
+    }
+
+    static getPlayerInfo(){
+        var playerInfoRef = database.ref(playerIndex);
+
+        playerInfoRef.on("value", (info) =>{
+            //cambiar nombre de la var para noo confundir con playerIndex
+            allPlayer = info.val();
+        })
+    }
+
+    getPlayerRank(){
+        var playerRankRef = database.ref(playerRankAtEnd);
+
+        playerRankRef.on("value", (place)=>{
+            //se usa el this pq señala de qué jugador hablamos
+            this.rank = place.val();
+        })
+    }
+
+    static updatePlayerRank(rank){
+        var playerRankAtEnd = database.ref("playerRank");
+            playerRankAtEnd.update({
+                rank: this.rank,
+            })
     }
 
 
